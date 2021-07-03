@@ -1,6 +1,4 @@
-'''
-Creating 9 empty values for playfield.
-'''
+# Creating 10 empty values for playfield. from 0 to 9(0 is always gonna be empty)
 board = [' ' for x in range(10)]
 
 
@@ -83,12 +81,13 @@ def playerMove():
                 print(' ' * 24 + 'Ошибка ввода \n' + ' ' * 24 + 'Type Error')
                 print('-' * 63)
         except:         # вывод ошибки если ввод не число
-            print(' ' * 24 + 'Только числа от 1 до 9 \n' + ' ' * 24 + 'Type Error')
+            print(' ' * 24 + 'Только числа от 1 до 9 \n' + ' ' * 24 + 'Only numbers in range from 1 to 9')
             print('-' * 63)
 
 
 def computerMove():
-    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0] # пронумеровываем наш лист board и проверяем еслм позиция не занята и индекс места не равен 0
+    # пронумеровываем наш лист board и проверяем еслм позиция не занята и индекс места не равен 0
+    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
     move = 0
     # Check if computer move leads to win
     for let in ['O', 'X']:
@@ -123,7 +122,8 @@ def computerMove():
 
     if len(edgesOpen) > 0:
         move = selectRandom(edgesOpen)
-        return move
+
+    return move
 
 
 def selectRandom(li):
@@ -136,20 +136,24 @@ def selectRandom(li):
 def main():
     print("Добро пожаловать в Игру! \nWelcome to the game!")
     printBoard(board)
+
+
     # Пока поле не заполнено
-    while not (isBoardFull(board)):
+    while not(isBoardFull(board)):
         # если компьютер не выиграл ходит игрок, если выиграл стоп игра
-        if not (isWinner(board, 'O')):
+        if not(isWinner(board, 'O')):
             playerMove()
             printBoard(board)
         else:
             print("Ты с проиграл с позором! \n sorry you loose!")
             break
+
         # если игрок не выиграл ходит комп, если выиграл стоп игра
         if not (isWinner(board, 'X')):
             move = computerMove()
             if move == 0:
-                print(" ")
+                print("Ничья!\nTie game")
+                break
             else:
                 insertLetter('O', move)
                 print('Я походил на позицию',move,'\ncomputer placed an O on position', move, ':')
@@ -157,9 +161,9 @@ def main():
         else:
             print("Я проиграл человеку... Форматирую диск С:\ \nyou win!")
             break
+        if isBoardFull(board):
+            print("Ничья!\nTie game")
 
-    if isBoardFull(board):
-        print("Ничья!\nTie game")
 
 
 while True:
